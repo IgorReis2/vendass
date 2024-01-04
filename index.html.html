@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venda de Açais</title>
+    <link rel="stylesheet" href="estilo/style.css">
+</head>
+<body>
+
+<h1>Venda de Açai</h1>
+
+<form id="salesForm">
+    <label for="name">Nome:</label>
+    <input type="text" id="name" required>
+
+    <label for="quantity">Quantidade(L):</label>
+    <input type="number" id="quantity" step="0.5" required>
+
+    <label for="size"></label>
+    <select id="size">
+        <option value="1">1L</option>
+        <option value="0.5">0.5L</option>
+    </select>
+
+    <button type="button" onclick="addSales()">Calcular</button>
+</form>
+
+<div id="salesResults">
+    <h2>Vendas</h2>
+    <ul id="resultsList"></ul>
+    <p>Total Vendido: <span id="totalSales">0</span></p>
+</div>
+
+<script>
+    // Armazenar dados de vendas
+    let salesData = [];
+
+    // Função para adicionar vendas
+    function addSales() {
+        // Obtenha valores de entrada
+        const name = document.getElementById('name').value;
+        const quantity = parseFloat(document.getElementById('quantity').value);
+        const size = parseFloat(document.getElementById('size').value);
+
+        // Validar entrada
+        if (isNaN(quantity) || quantity <= 0) {
+            alert('Insira uma quantidade válida.');
+            return;
+        }
+
+        // Valores padrão para cada item
+        const standardValue1L = 15.00;  // Valor padrão para 1 litro
+        const standardValue0_5L = 7.50; // Valor padrão para 0,5 litro
+
+        // Calcule o valor das vendas com base no tamanho selecionado
+        const salesAmount = (size === 1) ? quantity * standardValue1L : quantity * standardValue0_5L;
+
+        // Adicione dados de vendas à matriz(array)
+        salesData.push({ name, salesAmount });
+
+        // Atualizar resultados de vendas
+        updateSalesResults();
+    }
+
+    // Função para atualizar resultados de vendas
+    function updateSalesResults() {
+        const resultsList = document.getElementById('resultsList');
+        const totalSalesElement = document.getElementById('totalSales');
+
+        // Limpar resultados anteriores
+        resultsList.innerHTML = '';
+
+        // Calcular vendas totais
+        let totalSales = 0;
+
+        // Exibir resultados na lista
+        salesData.forEach(data => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${data.name}: $${data.salesAmount.toFixed(2)}`;
+            resultsList.appendChild(listItem);
+
+            // Atualizar vendas totais
+            totalSales += data.salesAmount;
+        });
+
+        // Exibir vendas totais
+        totalSalesElement.textContent = `$${totalSales.toFixed(2)}`;
+    }
+</script>
+
+</body>
+</html>
