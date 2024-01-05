@@ -78,7 +78,7 @@
         // Exibir resultados na lista
         salesData.forEach(data => {
             const listItem = document.createElement('li');
-            listItem.textContent = `${data.name}: $${data.salesAmount.toFixed(2)}`;
+            listItem.textContent = `${data.name}: R$ ${data.salesAmount.toFixed(2)}`;
             resultsList.appendChild(listItem);
 
             // Atualizar vendas totais
@@ -86,7 +86,7 @@
         });
 
         // Exibir vendas totais
-        totalSalesElement.textContent = `$${totalSales.toFixed(2)}`;
+        totalSalesElement.textContent = `R$ ${totalSales.toFixed(2)}`;
     }
 </script>
 
